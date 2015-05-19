@@ -1,0 +1,41 @@
+syntax enable
+autocmd BufEnter * :syntax sync fromstart
+set background=dark
+colors blue
+autocmd FileType python setlocal completeopt-=preview
+set history=700
+set pastetoggle=<F2>
+set nocompatible
+filetype on
+filetype plugin indent on
+set spell spelllang=en_us
+set autoread
+set hlsearch
+set nonumber
+set complete+=t
+set formatoptions-=t
+set nonumber
+set undofile
+set undodir=$HOME/.vim/tmp
+set dir=~/.vim/_swap//
+set backup
+set backupdir=~/.vim/_backup/
+set viminfo='30,\"00,:40,%,n~/.viminfo
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+highlight clear SpellBad
+highlight clear BadWhitespace
+highlight clear VertSplit
+highlight BadWhitespace ctermbg=red guibg=red
+highlight SpellBad cterm=underline ctermfg=blue
+highlight VertSplit term=reverse cterm=underline guifg=grey50 guibg=#c2bfa5
+au BufNewFile *.git/COMMIT_EDITMSG set textwidth=60
+let python_highlight_all=1
