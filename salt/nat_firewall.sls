@@ -48,18 +48,12 @@ refresh-firewall-ruleset:
 
 persist-ip-forwarding:
     file.append:
-        - user: root
-        - group: wheel
-        - mode: 640
         - name: /etc/sysctl.conf 
         - text:
             - net.inet.ip.forwarding=1
 
 full-pflog-snaplen:
     file.append:
-        - user: root
-        - group: wheel
-        - mode: 640
         - name: /etc/rc.conf.local
         - text:
             # get full MTU sized contents

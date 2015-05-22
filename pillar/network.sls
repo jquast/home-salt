@@ -45,9 +45,13 @@ network:
         iface: vio0
         name: cable
         domain: modem.xyz
+        route_name: comcast-gw
 
     dhcp_client:
         iface: vio0
+
+    # nas.modem.xyz acts as a secondary loghost
+    loghost: 172.16.19.100
 
     internal:
         iface: vio1
@@ -69,7 +73,7 @@ network:
                hwaddr: 68:5b:35:99:19:69
                ipaddr: 172.16.19.55
             docker:
-               hwaddr: 20:c9:d0:d2:d5:87
+               hwaddr: a8:20:66:20:34:71
                ipaddr: 172.16.19.56
             phx:
                hwaddr: 6c:40:08:8d:9b:88
@@ -80,6 +84,10 @@ network:
                # and is static-IP configured.
                hwaddr: 00:08:9b:f0:98:88
                ipaddr: 172.16.19.100
+            arch:
+               # another qemu-kvm host, arch linux
+               hwaddr: 52:54:00:1d:64:6a
+               ipaddr: 172.16.19.91
             ap:
                # apple airport runs in wireless and wired bridge-mode;
                # but requires an alias on the managed network for
@@ -88,6 +96,11 @@ network:
                ipaddr: 172.16.19.1
 
             # wifi-connected devices (mine)
+
+            dockwi:
+               hwaddr: a8:20:66:20:34:71
+               ipaddr: 172.16.19.63
+
             grey:
                # ipod
                hwaddr: 88:1f:a1:dd:a1:f4
@@ -100,6 +113,7 @@ network:
 
             0c30210212a6:
                # "sky diamond"
+               # MAC Address: Apple
                hwaddr: 0c:30:21:02:12:a6
                ipaddr: 172.16.19.60
 
@@ -113,10 +127,18 @@ network:
                hwaddr: 84:38:35:43:2f:4a
                ipaddr: 172.16.19.62
 
-            a82066203471:
-               # "macintosh"
-               hwaddr: a8:20:66:20:34:71
-               ipaddr: 172.16.19.63
+            28c68ef9f973:
+               # unknown, 172.16.19.90
+               hwaddr: 28:c6:8e:f9:f9:73
+               ipaddr: 172.16.19.90
+
+            20c9d0d2d587:
+               # MAC Address: 20:C9:D0:D2:D5:87 (Apple)
+               # Too many fingerprints match, no OS details
+               hwaddr: 20:c9:d0:d2:d5:87
+               ipaddr: 172.16.19.92
+
+              
 
     ntpd:
         servers:

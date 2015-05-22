@@ -3,6 +3,8 @@
 # external ip determined at highstate,
 {% set _egress_iface = pillar['network']['egress']['iface'] %}
 {% set egress_ip = salt['network.ip_addrs'](_egress_iface)[0] %}
+{% set egress_route = salt['network.default_route'](family='inet')[0]["gateway"] %}
+{% set egress_route_name = pillar['network']['egress']['route_name'] %}
 
 # static valeus
 {% set egress_name = pillar['network']['egress']['name'] %}
@@ -47,7 +49,7 @@ dnsmasq:
                 default-lease-time 1800;
                 max-lease-time 86400;
 
-                {%- for hostname, netcfg in dhcp_hosts.items() -%}
+                {%- for hostname, netcfg in dhcp_hosts.items()|sort -%}
                 host {{ hostname }} {
                         hardware ethernet {{ netcfg['hwaddr'] }};
                         fixed-address {{ netcfg['ipaddr'] }};
@@ -62,12 +64,13 @@ dnsmasq:
             ::1		localhost
 
             {{ egress_ip }}	{{ egress_name }}.{{ domain_name }} {{ gateway_name }}
+            {{ egress_route }}	{{ egress_route_name }}.{{ domain_name }} {{ egress_route_name }}
 
             # static internal network gateway ip
             {{ gateway }}	{{ gateway_name }}.{{ domain_name }} {{ gateway_name }}
 
             # dhcpd-managed hosts,
-            {%- for hostname, netcfg in dhcp_hosts.items() %}
+            {%- for hostname, netcfg in dhcp_hosts.items()|sort -%}
             {{ netcfg['ipaddr'] }}	{{ hostname }}.{{ domain_name }} {{ hostname }}
             {% endfor %}
 
