@@ -37,9 +37,11 @@ network:
         # gateway is a primary dns server
         - 172.16.19.84
         # opennic, (CA, US)
-        - 74.207.241.202
+        #- 74.207.241.202
         # opennic, (CA, US)
-        - 104.245.33.185
+        #- 104.245.33.185
+        - 8.8.8.8
+        - 8.8.4.4
 
     egress:
         iface: vio0
