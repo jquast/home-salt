@@ -65,4 +65,4 @@ full-pflog-snaplen:
 enable-ip-forwarding:
     cmd.run:
         - name: sysctl net.inet.ip.forwarding=1
-        - onlyif: [ X"$(sysctl net.inet.ip.forwarding$)" != X"net.inet.ip.forwarding=1" ]
+        - onlyif: [ X"$(sysctl net.inet.ip.forwarding)" != X"net.inet.ip.forwarding=1" ]
