@@ -31,6 +31,9 @@ plumb-iface-{{ int_iface }}:
             # nat rewrite all traffic from non-egress int_iface networks to egress
             match out on {{ egress_iface }} inet from !({{ egress_iface }}:network) to any nat-to ({{ egress_iface }}:0)
 
+            # normalized fragmented packets, anonymize our tcp-id's
+            match in all scrub (no-df random-id reassemble tcp)
+
             # allow all outbound traffic
             pass out quick
 
