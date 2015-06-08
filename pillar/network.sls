@@ -77,6 +77,9 @@ network:
             docker:
                hwaddr: a8:20:66:20:34:71
                ipaddr: 172.16.19.56
+            dockfi:
+               hwaddr: 20:c9:d0:d2:d5:87
+               ipaddr: 172.16.19.63
             phx:
                hwaddr: 6c:40:08:8d:9b:88
                ipaddr: 172.16.19.57
@@ -98,11 +101,6 @@ network:
                ipaddr: 172.16.19.1
 
             # wifi-connected devices (mine)
-
-            dockwi:
-               hwaddr: a8:20:66:20:34:71
-               ipaddr: 172.16.19.63
-
             grey:
                # ipod
                hwaddr: 88:1f:a1:dd:a1:f4
@@ -134,13 +132,6 @@ network:
                hwaddr: 28:c6:8e:f9:f9:73
                ipaddr: 172.16.19.90
 
-            20c9d0d2d587:
-               # MAC Address: 20:C9:D0:D2:D5:87 (Apple)
-               # Too many fingerprints match, no OS details
-               hwaddr: 20:c9:d0:d2:d5:87
-               ipaddr: 172.16.19.92
-
-              
 
     ntpd:
         servers:
