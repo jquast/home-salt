@@ -22,7 +22,7 @@ plumb-iface-{{ int_iface }}:
     file.managed:
         - user: root
         - group: wheel
-        - mode: 640
+        - mode: 600
         - contents: |
             # vim: syntax=pf
             set skip on lo
