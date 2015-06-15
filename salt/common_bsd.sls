@@ -102,6 +102,15 @@
         - require:
             - file: /root/.vim
 
+/etc/rc.local:
+     file.managed:
+         - user: root
+         - group: wheel
+         - contents: |
+             echo -n 'salt-call state.highstate .. '
+             /root/.virtualenvs/salt/bin/salt-call -l warning \
+                 state.highstate && echo ok
+
 #common-packages:
 #    pkg.installed:
 #        pkgs:
