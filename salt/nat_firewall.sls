@@ -4,6 +4,8 @@
 {% set int_ip_addr = pillar['network']['internal']['gateway'] %}
 {% set int_netmask = pillar['network']['internal']['netmask'] %}
 
+{% set arch_ipaddr = pillar['network']['dhcpd']['hosts']['arch']['ipaddr'] %}
+
 /etc/hostname.{{ int_iface }}:
     file.managed:
         - user: root
@@ -31,6 +33,11 @@ plumb-iface-{{ int_iface }}:
             # nat rewrite all traffic from non-egress int_iface networks to egress
             match out on {{ egress_iface }} inet from !({{ egress_iface }}:network) to any nat-to ({{ egress_iface }}:0)
 
+            # joe's redirect
+            pass in log quick on {{ egress_iface }} inet proto tcp \
+                 from any to ({{ egress_iface }}) port 11011 \
+                 rdr-to {{ arch_ipaddr }} port ssh
+
             # normalized fragmented packets, anonymize our tcp-id's
             match in all scrub (no-df random-id reassemble tcp)
 
@@ -42,6 +49,11 @@ plumb-iface-{{ int_iface }}:
 
             # block all remaining traffic
             block return log on {{ egress_iface }}
+
+pfctl -f /etc/pf.conf:
+    cmd.run:
+        - watch:
+            - file: /etc/pf.conf
 
 refresh-firewall-ruleset:
     cmd.wait:

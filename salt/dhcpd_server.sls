@@ -30,6 +30,7 @@ dhcpd:
 dnsmasq:
     service.running:
        - enable: True
+       - flags: -q
        - watch:
            - file: /etc/dnsmasq.conf
 
@@ -69,10 +70,15 @@ dnsmasq:
             # static internal network gateway ip
             {{ gateway }}	{{ gateway_name }}.{{ domain_name }} {{ gateway_name }}
 
-            # dhcpd-managed hosts,
+            # dhcpd-managed static IP hosts (known MAC),
             {%- for hostname, netcfg in dhcp_hosts.items()|sort -%}
             {{ netcfg['ipaddr'] }}	{{ hostname }}.{{ domain_name }} {{ hostname }}
             {% endfor %}
+
+{#            # free-falling #} #}
+{#            172.16.19.90 172.16.19.99 #}
+{#           {%- set start = dhcp_range.split()[0].split('.')[-1] | int -%} #}
+{#           {%- set end = dhcp_range.split()[1].split('.')[-1] | int -%} #}
 
 /etc/myname:
     file.managed:

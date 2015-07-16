@@ -91,7 +91,7 @@ network:
                ipaddr: 172.16.19.100
             arch:
                # another qemu-kvm host, arch linux
-               hwaddr: 52:54:00:ce:33:c7
+               hwaddr: 52:54:00:61:6b:e3
                ipaddr: 172.16.19.91
             ap:
                # apple airport runs in wireless and wired bridge-mode;

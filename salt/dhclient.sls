@@ -8,7 +8,9 @@
         - user: root
         - group: wheel
         - mode: 640
-        - contents: dhcp
+        - contents: |
+            !rm -f /var/db/dhclient.leases.vio0
+            dhcp
 
 /etc/dhclient.conf:
     file.managed:
@@ -49,8 +51,8 @@ update-hover-dns:
          - env:
              - HOVER_USERNAME: {{ pillar['secrets']['hover-username'] }}
              - HOVER_PASSWORD: {{ pillar['secrets']['hover-password'] }}
-         - onchanges:
-             - file: /usr/local/bin/update-hover-dns.py
-             - cmd: configure-dhcp-iface
+#         - onchanges:
+#             - file: /usr/local/bin/update-hover-dns.py
+#             - cmd: configure-dhcp-iface
 
 {% endif %}
